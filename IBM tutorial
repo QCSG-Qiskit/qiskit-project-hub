@@ -1,1 +1,32 @@
+# IBM Qiskit Tutorial Code
+# Author: [Your Name]
+# This code demonstrates a simple quantum circuit using Qiskit and IBM's quantum simulator.
+
+# Import necessary libraries
+from qiskit import QuantumCircuit, transpile, Aer, execute
+from qiskit.visualization import plot_histogram
+import matplotlib.pyplot as plt
+
+# Step 1: Create a Quantum Circuit with 1 quantum bit and 1 classical bit
+qc = QuantumCircuit(1, 1)
+
+# Step 2: Add a Hadamard gate on the qubit to put it in superposition
+qc.h(0)
+
+# Step 3: Measure the qubit state
+qc.measure(0, 0)
+
+# Step 4: Simulate the circuit using Qiskit's Aer simulator
+backend = Aer.get_backend('qasm_simulator')
+compiled_circuit = transpile(qc, backend)
+job = execute(compiled_circuit, backend, shots=1024)
+result = job.result()
+
+# Step 5: Get the results and plot them
+counts = result.get_counts(qc)
+print("Measurement Results:", counts)
+
+# Step 6: Plot the results as a histogram
+plot_histogram(counts)
+plt.show()
 
